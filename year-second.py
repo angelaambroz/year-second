@@ -52,36 +52,26 @@ for x in year_months:
 
 ## Checking whether a day-video is missing
 
-# this is not working - i can't datetime-ify the strings. why?
+year_days = []
+year_files = []
+
 for item in year_array:
-	item = datetime.datetime.strptime(item, "%Y %b %d")
+	day = datetime.datetime.strptime(item, "%Y %b %d")
+	year_days.append(day)
 
 for item in file_array:
-	item = datetime.datetime.strptime(item, "%Y %b %d")
-
-# Only check stuff from before today...
-today = datetime.date.today()
-today = today.strftime("%Y %b %d")
-
-print year_array
-print file_array
-
-for item in year_array:
-	if item.date() > datetime.today().date():
-		print item + " is the future."
-	elif item.date() == datetime.today().date() :
-		print item + " is today."
-	else:
-		print item + " is the past."
+	year_file = datetime.datetime.strptime(item, "%Y %b %d")
+	year_files.append(year_file)
 
 
-# for item in year_array:
-# 	if item in file_array:
-# 		print "fine! " + item + " is here."
-# 	elif item > today: #this isn't working - how to check 
-# 		print "ooh " + item + " is in the future"
-# 	else: 
-# 		print "uh oh, looks like " + item + " is missing."
+for item in year_days:
+	if item in year_files and item.date() <= datetime.date.today():
+		print "fine! " + `item` + " is here."
+	elif item.date() > datetime.date.today():
+		print "ooh " + `item` + " is in the future"
+	else: 
+		print "uh oh, looks like " + `item` + " is missing."
+
 
 
 ## Test run: Making sure MoviePy works

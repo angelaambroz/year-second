@@ -23,7 +23,7 @@ year-second
 12. ~~If multiple files for a day, randomly pick a 1-second clip from one of them.~~ When I copy/rename them all, they overwrite with the latest one. Not random? Am I OK with this?
 13. How to preserve the raw video files?!
 14. ~~Should I rename every video by its current (fragile!) data-modified? This would also standardize the file names, at least...~~
-15. Redo date arrays using `datetime` instead of `str`.
+15. ~~Redo date arrays using `datetime` instead of `str`.~~ Totally inefficient, but it's working now.
 
 
 
