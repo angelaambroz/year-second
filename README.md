@@ -9,8 +9,8 @@ year-second
 2. ~~Test run to see if MoviePy works.~~
 3. Check if any day is missing (`os` file meta-data?).
 4. Loop through, check that every day has a video.
-    4.1. **Idea 1**: Loop through files, pull their date modified. Create array. Check array against full array of days since Jan 1?
-    4.2. **Idea 1**: Pipe date-modified data out to a text or .csv file, merge, compare?
+    * **Idea 1**: ~~Loop through files, pull their date modified. Create array.~~ Check array against full array of days since Jan 1?
+    * **Idea 2**: Pipe date-modified data out to a text or .csv file, merge, compare?
 5. If day is missing, write `error` message to file _and_ use stand-in black box with "Forgot today!" text.
 6. If day is present, take 1-second random snip (use video meta-data to make it a `def` (function) of the video time-length).
 7. Add text for each day: JANUARY 1. 

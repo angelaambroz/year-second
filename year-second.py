@@ -6,11 +6,19 @@ from moviepy.editor import *
 
 directory = "/Users/angelaambroz/Documents/Personal/Projects/2015 second a day/"
 
+file_array = []
+
+
 for item in os.listdir(directory):
 	if item==".DS_Store": 
 		print "skipping ds store"
 	else:
-		print "last modified: %s" % time.ctime(os.path.getmtime(directory + item))
+		modified = time.ctime(os.path.getmtime(directory + item))
+		modified = modified[4:-14]
+		file_array.append(modified)
+
+print(file_array)
+
 
 
 
