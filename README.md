@@ -23,6 +23,7 @@ year-second
 12. ~~If multiple files for a day, randomly pick a 1-second clip from one of them.~~ When I copy/rename them all, they overwrite with the latest one. Not random? Am I OK with this?
 13. How to preserve the raw video files?!
 14. ~~Should I rename every video by its current (fragile!) data-modified? This would also standardize the file names, at least...~~
+15. Redo date arrays using `datetime` instead of `str`.
 
 
 
@@ -31,7 +32,7 @@ year-second
 
 * Inspiration: [Save the Children - "Most Shocking Second a Day Video"](https://www.youtube.com/watch?v=RBQ-IoHfimQ)
 * Inspiration: [Cesar Kuriyama - TED Talk](http://www.ted.com/talks/cesar_kuriyama_one_second_every_day?language=en)
-* Documentation: [MoviePy - Documentation](https://zulko.github.io/moviepy/index.html)
+* Documentation: [MoviePy](https://zulko.github.io/moviepy/index.html)
 * Another worrying sign that I am a complete subconscious slave to fashion/the zeitgeist: [xkcd - Art project](https://xkcd.com/1496/)
 
 
