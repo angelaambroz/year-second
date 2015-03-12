@@ -19,7 +19,7 @@ year-second
 8. Stitch all clips together. Ta-da! Use MoviePy's concatenation for this: `final_clip = concatenate_videoclips([clip1,clip2,clip3])`.
 9. Make several versions?
 10. Final editing polish with music, etc.
-11. Can I use `HEX`/`RGB` for font color?
+11. ~~Can I use `HEX`/`RGB` for font color?~~ Yes, I think RGB is kosher.
 12. ~~If multiple files for a day, randomly pick a 1-second clip from one of them.~~ When I copy/rename them all, they overwrite with the latest one. Not random? Am I OK with this?
 13. How to preserve the raw video files?!
 14. ~~Should I rename every video by its current (fragile!) data-modified? This would also standardize the file names, at least...~~

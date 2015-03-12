@@ -79,12 +79,14 @@ print os.getcwd()
 
 ## Making the 'FORGOT' clip
 
-testclip = mpy.ColorClip(size=(150,150), col="black", duration=1)
-forgot_label = mpy.TextClip("forgot.", fontsize=70, color="white")
+testclip = mpy.ColorClip(size=(400,400), col=[0,0,0], duration=1)
+
+forgot_label = mpy.TextClip("forgot. :(", fontsize=70, color="white")
 forgot_label = forgot_label.set_pos("center").set_duration(1)
 
+
 forgot_clip = mpy.CompositeVideoClip([testclip, forgot_label])
-forgot_clip.write_videofile(os.getcwd() + "test.mp4",fps=24)
+forgot_clip.write_videofile(day_files+ "/../test.mp4",fps=24)
 
 
 
