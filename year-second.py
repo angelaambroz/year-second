@@ -26,8 +26,7 @@ for item in os.listdir(raw_files):
 		else:
 			modified = modified[4:-14]
 		file_array.append("2015 " + modified)
-		#shutil.copy2(raw_files + item, day_files + "DAY_" + modified[:3]
-		 # + modified[4:]  + ".mp4")
+		#shutil.copy2(raw_files + item, day_files + "DAY_" + modified[:3] + modified[4:]  + ".mp4")
 
 
 ## There must be a faster way to do this...
@@ -37,8 +36,6 @@ year_months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",
 long_months = ["Jan", "Mar", "May", "Jul", "Aug", "Oct", "Dec"]
 short_months = ["Apr", "Jun", "Sep", "Nov"]
 year_array = []
-
-print len(year_months)
 
 for x in year_months:
 	if x in long_months:
@@ -68,25 +65,42 @@ for item in file_array:
 
 
 for item in year_days:
-	if item in year_files and item.date() <= datetime.date.today():
-		print `item` + ": OK"
-	elif item.date() > datetime.date.today():
-		print `item` + ": to be completed"
+	if item in year_files and item.date() <= datetime.date.today() or item.date() > datetime.date.today():
+		pass
 	else: 
-		print `item` + ": missing"
+		print item.strftime("%b %d") + ": missing"
 
-print os.getcwd()
 
 ## Making the 'FORGOT' clip
 
-testclip = mpy.ColorClip(size=(400,400), col=[0,0,0], duration=1)
+# testclip = mpy.ColorClip(size=(400,400), col=[0,0,0], duration=1)
 
-forgot_label = mpy.TextClip("forgot. :(", fontsize=70, color="white")
-forgot_label = forgot_label.set_pos("center").set_duration(1)
+# forgot_label = mpy.TextClip("forgot. :(", fontsize=70, color="white")
+# forgot_label = forgot_label.set_pos("center").set_duration(1)
 
 
-forgot_clip = mpy.CompositeVideoClip([testclip, forgot_label])
-forgot_clip.write_videofile(day_files+ "/../test.mp4",fps=24)
+# forgot_clip = mpy.CompositeVideoClip([testclip, forgot_label])
+# forgot_clip.write_videofile(day_files+ "/../test.mp4",fps=24)
+
+
+## Looping concatenation
+
+base_clip = mpy.VideoFileClip(day_files + "DAY_Dec31.mp4").set_duration(1)
+
+
+for item in os.listdir(day_files):
+	if item==".DS_Store" or item=="DAY_Dec31.mp4":
+		pass
+	else:
+		print "Now doing: " + item
+		txt_clip = mpy.TextClip("test",fontsize=70,color="white")
+		txt_clip = txt_clip.set_pos(("center","bottom")).set_duration(1)
+		day_clip = mpy.VideoFileClip(day_files+item).subclip(0,1)
+		clip = mpy.CompositeVideoClip([day_clip, txt_clip])
+
+		year_video = mpy.concatenate_videoclips([base_clip, clip])
+		year_video.write_videofile(day_files + "../2015edited/test.mp4", fps=24)
+
 
 
 
@@ -101,10 +115,12 @@ forgot_clip.write_videofile(day_files+ "/../test.mp4",fps=24)
 
 # video.write_videofile(directory + "test.mp4")
 
-# from moviepy.editor import VideoFileClip, concatenate_videoclips
 # clip1 = VideoFileClip("myvideo.mp4")
 # clip2 = VideoFileClip("myvideo2.mp4").subclip(50,60)
 # clip3 = VideoFileClip("myvideo3.mp4")
 # final_clip = concatenate_videoclips([clip1,clip2,clip3])
 # final_clip.write_videofile("my_concatenation.mp4")
+
+
+
 
