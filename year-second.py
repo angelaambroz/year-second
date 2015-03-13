@@ -88,18 +88,19 @@ for item in year_days:
 base_clip = mpy.VideoFileClip(day_files + "DAY_Dec31.mp4").set_duration(1)
 
 
-for item in os.listdir(day_files):
+for item in os.listdir(day_files)[:10]:
 	if item==".DS_Store" or item=="DAY_Dec31.mp4":
-		pass
+		pass	
 	else:
 		print "Now doing: " + item
 		txt_clip = mpy.TextClip("test",fontsize=70,color="white")
 		txt_clip = txt_clip.set_pos(("center","bottom")).set_duration(1)
-		day_clip = mpy.VideoFileClip(day_files+item).subclip(0,1)
+		day_clip = mpy.VideoFileClip(day_files+item).subclip(0,-1)
 		clip = mpy.CompositeVideoClip([day_clip, txt_clip])
 
 		year_video = mpy.concatenate_videoclips([base_clip, clip])
-		year_video.write_videofile(day_files + "../2015edited/test.mp4", fps=24)
+		year_video.write_videofile(day_files + "../2015edited/base.mp4", fps=24)
+		base_clip = mpy.VideoFileClip(day_files + "../2015edited/base.mp4")
 
 
 

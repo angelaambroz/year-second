@@ -27,6 +27,9 @@ year-second
 16. Make a list of notable days, and highlight them in some way. (e.g. Color mask?)
 17. How to only pull the _last_ 1-2 seconds from a clip?
 18. Need to progressively concatenate.
+19. Make day-text a function of day-filename.
+20. Sort the files so they run in chrono order.
+21. Problem: it is EXTREMELY SLOW. What can I do?
 
 
 ### Resources
