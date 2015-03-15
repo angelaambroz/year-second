@@ -25,17 +25,19 @@ year-second
 14. ~~Should I rename every video by its current (fragile!) data-modified? This would also standardize the file names, at least...~~
 15. ~~Redo date arrays using `datetime` instead of `str`.~~ Totally inefficient, but it's working now.
 16. Make a list of notable days, and highlight them in some way. (e.g. Color mask?)
-17. How to only pull the _last_ 1-2 seconds from a clip?
-18. Need to progressively concatenate.
+17. ~~How to only pull the _last_ 1-2 seconds from a clip?~~
+18. ~~Need to progressively concatenate.~~
 19. Make day-text a function of day-filename.
 20. Sort the files so they run in chrono order.
-21. Problem: it is EXTREMELY SLOW. What can I do?
+21. ~~Problem: it is EXTREMELY SLOW. What can I do?~~ Instead of writing a video file iteratively, put everything in an array and concat. Also, [0,-1] was super slow.
+22. How to deal with `fps` issue in both phone videos and webcam videos?
 
 
 ### Resources
 
 * Inspiration: [Save the Children - "Most Shocking Second a Day Video"](https://www.youtube.com/watch?v=RBQ-IoHfimQ)
 * Inspiration: [Cesar Kuriyama - TED Talk](http://www.ted.com/talks/cesar_kuriyama_one_second_every_day?language=en)
+* Q&A: [StackOverflow - Missing dates in a sorted list](https://stackoverflow.com/questions/2315032/how-do-i-find-missing-dates-in-a-list-of-sorted-dates)
 * Documentation: [MoviePy](https://zulko.github.io/moviepy/index.html)
 * Another worrying sign that I am a complete subconscious slave to fashion/the zeitgeist: [xkcd - Art project](https://xkcd.com/1496/)
 

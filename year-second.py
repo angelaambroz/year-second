@@ -4,6 +4,7 @@ import os
 import time
 import datetime
 import shutil
+import scipy
 import moviepy.editor as mpy
 
 ## Directories
@@ -68,7 +69,7 @@ for item in year_days:
 	if item in year_files and item.date() <= datetime.date.today() or item.date() > datetime.date.today():
 		pass
 	else: 
-		print item.strftime("%b %d") + ": missing"
+		print item.strftime("%b%d") + ": missing"
 
 
 ## Making the 'FORGOT' clip
@@ -82,45 +83,43 @@ for item in year_days:
 # forgot_clip = mpy.CompositeVideoClip([testclip, forgot_label])
 # forgot_clip.write_videofile(day_files+ "/../test.mp4",fps=24)
 
+# feb_clip = mpy.VideoFileClip(day_files + "DAY_Feb21.mp4")
+# feb_clip = feb_clip.subclip(int(feb_clip.duration)-4,int(feb_clip.duration)-3)
+
+# print feb_clip.duration
+
 
 ## Looping concatenation
 
 base_clip = mpy.VideoFileClip(day_files + "DAY_Dec31.mp4").set_duration(1)
 
+clip_array = [base_clip]
 
-for item in os.listdir(day_files)[:10]:
+print base_clip.size
+
+for item in os.listdir(day_files)[:5]:
 	if item==".DS_Store" or item=="DAY_Dec31.mp4":
 		pass	
 	else:
 		print "Now doing: " + item
-		txt_clip = mpy.TextClip("test",fontsize=70,color="white")
+		day_clip = mpy.VideoFileClip(day_files+item).set_duration(1)
+		print day_clip.size
+		# day_clip = day_clip.resize(base_clip.size)
+		# print day_clip.size
+		# day_clip = day_clip.subclip(int(day_clip.duration)-7,int(day_clip.duration)-6)
+
+		txt_clip = mpy.TextClip("test",fontsize=50,color="white")
 		txt_clip = txt_clip.set_pos(("center","bottom")).set_duration(1)
-		day_clip = mpy.VideoFileClip(day_files+item).subclip(0,-1)
-		clip = mpy.CompositeVideoClip([day_clip, txt_clip])
 
-		year_video = mpy.concatenate_videoclips([base_clip, clip])
-		year_video.write_videofile(day_files + "../2015edited/base.mp4", fps=24)
-		base_clip = mpy.VideoFileClip(day_files + "../2015edited/base.mp4")
+		clip_item = mpy.CompositeVideoClip([day_clip, txt_clip])
+
+		clip_array.append(clip_item)
 
 
+year_video = mpy.concatenate_videoclips(clip_array, method='compose')
+year_video.write_videofile(day_files + "../2015edited/all my seconds 2015.mp4",fps=30)
 
 
-## Test run: Making sure MoviePy works
-
-# clip = VideoFileClip(directory + "VID_20150126_085336.mp4").subclip(0,1)
-
-# txt_clip = TextClip("January 26",fontsize=70,color="red")
-# txt_clip = txt_clip.set_pos("center").set_duration(1)
-
-# video = CompositeVideoClip([clip, txt_clip])
-
-# video.write_videofile(directory + "test.mp4")
-
-# clip1 = VideoFileClip("myvideo.mp4")
-# clip2 = VideoFileClip("myvideo2.mp4").subclip(50,60)
-# clip3 = VideoFileClip("myvideo3.mp4")
-# final_clip = concatenate_videoclips([clip1,clip2,clip3])
-# final_clip.write_videofile("my_concatenation.mp4")
 
 
 
