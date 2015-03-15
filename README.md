@@ -16,7 +16,7 @@ year-second
 5. ~~If day is missing, write `error` message to file _and_ use stand-in black box with "forgotten." text.~~
 6. ~~If day is present, take 1-second random snip (use video meta-data to make it a `def` (function) of the video time-length).~~
 7. ~~Add text for each day: JANUARY 1.~~ 
-8. Stitch all clips together. Ta-da! Use MoviePy's concatenation for this: `final_clip = concatenate_videoclips([clip1,clip2,clip3])`.
+8. ~~Stitch all clips together. Ta-da! Use MoviePy's concatenation for this: `final_clip = concatenate_videoclips([clip1,clip2,clip3])`.~~
 9. Make several versions?
 10. Final editing polish with music, etc.
 11. ~~Can I use `HEX`/`RGB` for font color?~~ Yes, I think RGB is kosher.
@@ -27,10 +27,11 @@ year-second
 16. Make a list of notable days, and highlight them in some way. (e.g. Color mask?)
 17. ~~How to only pull the _last_ 1-2 seconds from a clip?~~
 18. ~~Need to progressively concatenate.~~
-19. Make day-text a function of day-filename.
-20. Sort the files so they run in chrono order.
+19. ~~Make day-text a function of day-filename.~~
+20. ~~Sort the files so they run in chrono order.~~
 21. ~~Problem: it is EXTREMELY SLOW. What can I do?~~ Instead of writing a video file iteratively, put everything in an array and concat. Also, [0,-1] was super slow.
-22. How to deal with `fps` issue in both phone videos and webcam videos?
+22. ~~How to deal with `fps` issue in both phone videos and webcam videos?~~ Wasn't fps, but size of the clip!
+23. Slot in the 'forgot.' video into final year video. 
 
 
 ### Resources

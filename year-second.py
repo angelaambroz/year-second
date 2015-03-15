@@ -4,8 +4,8 @@ import os
 import time
 import datetime
 import shutil
-import scipy
 import moviepy.editor as mpy
+
 
 ## Directories
 
@@ -92,23 +92,21 @@ for item in year_days:
 ## Looping concatenation
 
 base_clip = mpy.VideoFileClip(day_files + "DAY_Dec31.mp4").set_duration(1)
-
 clip_array = [base_clip]
 
-print base_clip.size
+sorted_files = os.listdir(day_files)
 
-for item in os.listdir(day_files)[:5]:
+sorted_files.sort(key=lambda x: os.stat(os.path.join(day_files, x)).st_mtime)
+
+for item in sorted_files:
 	if item==".DS_Store" or item=="DAY_Dec31.mp4":
 		pass	
 	else:
 		print "Now doing: " + item
 		day_clip = mpy.VideoFileClip(day_files+item).set_duration(1)
-		print day_clip.size
-		# day_clip = day_clip.resize(base_clip.size)
-		# print day_clip.size
-		# day_clip = day_clip.subclip(int(day_clip.duration)-7,int(day_clip.duration)-6)
+		#day_clip = day_clip.subclip(int(day_clip.duration)-5,int(day_clip.duration)-4)
 
-		txt_clip = mpy.TextClip("test",fontsize=50,color="white")
+		txt_clip = mpy.TextClip(item[4:7] + " " + item[7:9],fontsize=50,color="white")
 		txt_clip = txt_clip.set_pos(("center","bottom")).set_duration(1)
 
 		clip_item = mpy.CompositeVideoClip([day_clip, txt_clip])
@@ -117,7 +115,7 @@ for item in os.listdir(day_files)[:5]:
 
 
 year_video = mpy.concatenate_videoclips(clip_array, method='compose')
-year_video.write_videofile(day_files + "../2015edited/all my seconds 2015.mp4",fps=30)
+year_video.write_videofile(day_files + "../2015edited/all my seconds 2015.mp4",fps=24)
 
 
 
