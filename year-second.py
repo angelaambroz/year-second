@@ -15,6 +15,9 @@ day_files = "/Users/angelaambroz/Documents/Personal/Projects/2015new/"
 
 ## Preparing the raw day video files
 
+# Temp broken: need to sort out (and clean up) the date comparisons. Everything after Mar 15 needs to 
+# be named after its filename, not its date-modified.
+
 file_array = []
 
 for item in os.listdir(raw_files):
@@ -22,11 +25,16 @@ for item in os.listdir(raw_files):
 		pass
 	else:
 		modified = time.ctime(os.path.getmtime(raw_files + item))
-		if modified[8:9]==" ":
-			modified = modified[4:7] + " " + modified[9:10]
-		else:
-			modified = modified[4:-14]
-		file_array.append("2015 " + modified)
+		print item 
+		print modified
+		if datetime.datetime.strptime(item, "%Y %b %d")(time.ctime(os.path.getmtime(raw_files + item))) < datetime.date.today():
+			if modified[8:9]==" ":
+				modified = modified[4:7] + " " + modified[9:10]
+			else:
+				modified = modified[4:-14]
+			file_array.append("2015 " + modified)
+		elif datetime.datetime.strptime(item, "%Y %b %d")(time.ctime(os.path.getmtime(raw_files + item))) >= datetime.date.today():
+			print "Testing this now."
 		#shutil.copy2(raw_files + item, day_files + "DAY_" + modified[:3] + modified[4:]  + ".mp4")
 
 
@@ -79,14 +87,7 @@ for item in year_days:
 # forgot_label = mpy.TextClip("forgot. :(", fontsize=70, color="white")
 # forgot_label = forgot_label.set_pos("center").set_duration(1)
 
-
 # forgot_clip = mpy.CompositeVideoClip([testclip, forgot_label])
-# forgot_clip.write_videofile(day_files+ "/../test.mp4",fps=24)
-
-# feb_clip = mpy.VideoFileClip(day_files + "DAY_Feb21.mp4")
-# feb_clip = feb_clip.subclip(int(feb_clip.duration)-4,int(feb_clip.duration)-3)
-
-# print feb_clip.duration
 
 
 ## Looping concatenation
@@ -98,24 +99,24 @@ sorted_files = os.listdir(day_files)
 
 sorted_files.sort(key=lambda x: os.stat(os.path.join(day_files, x)).st_mtime)
 
-for item in sorted_files:
-	if item==".DS_Store" or item=="DAY_Dec31.mp4":
-		pass	
-	else:
-		print "Now doing: " + item
-		day_clip = mpy.VideoFileClip(day_files+item).set_duration(1)
-		#day_clip = day_clip.subclip(int(day_clip.duration)-5,int(day_clip.duration)-4)
+# for item in sorted_files:
+# 	if item==".DS_Store" or item=="DAY_Dec31.mp4":
+# 		pass	
+# 	else:
+# 		print "Now doing: " + item
+# 		day_clip = mpy.VideoFileClip(day_files+item).set_duration(1)
+# 		#day_clip = day_clip.subclip(int(day_clip.duration)-5,int(day_clip.duration)-4)
 
-		txt_clip = mpy.TextClip(item[4:7] + " " + item[7:9],fontsize=50,color="white")
-		txt_clip = txt_clip.set_pos(("center","bottom")).set_duration(1)
+# 		txt_clip = mpy.TextClip(item[4:7] + " " + item[7:9],fontsize=50,color="white")
+# 		txt_clip = txt_clip.set_pos(("center","bottom")).set_duration(1)
 
-		clip_item = mpy.CompositeVideoClip([day_clip, txt_clip])
+# 		clip_item = mpy.CompositeVideoClip([day_clip, txt_clip])
 
-		clip_array.append(clip_item)
+# 		clip_array.append(clip_item)
 
 
-year_video = mpy.concatenate_videoclips(clip_array, method='compose')
-year_video.write_videofile(day_files + "../2015edited/all my seconds 2015.mp4",fps=24)
+# year_video = mpy.concatenate_videoclips(clip_array, method='compose')
+# year_video.write_videofile(day_files + "../2015edited/2015 in review.mp4",fps=24)
 
 
 

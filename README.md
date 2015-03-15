@@ -4,6 +4,7 @@ year-second
 11 March 2015. AMAZING `Python` is AMAZING. A project to learn this wonderful language. Documenting 2015 via a second-a-day video, except I'm automating the actual selection of each second (for, one hopes, delightful results). Computer art?!
 
 (Idea for next project: use `imageio` to make a photo quilt?)
+(Idea for next project: looping GIF tapestry of day clips - clickable, pulls up details, special days highlighted in yellow border)
 
 
 ### To Do
@@ -32,6 +33,8 @@ year-second
 21. ~~Problem: it is EXTREMELY SLOW. What can I do?~~ Instead of writing a video file iteratively, put everything in an array and concat. Also, [0,-1] was super slow.
 22. ~~How to deal with `fps` issue in both phone videos and webcam videos?~~ Wasn't fps, but size of the clip!
 23. Slot in the 'forgot.' video into final year video. 
+24. Add a countdown: how many days left to make videos?
+25. Anything after March 15: instead of sorting/organizing/naming by date-modified, need to do it all by filename. 
 
 
 ### Resources
