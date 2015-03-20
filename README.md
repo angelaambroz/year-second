@@ -34,7 +34,8 @@ year-second
 22. ~~How to deal with `fps` issue in both phone videos and webcam videos?~~ Wasn't fps, but size of the clip!
 23. Slot in the 'forgot.' video into final year video. 
 24. Add a countdown: how many days left to make videos?
-25. Anything after March 15: instead of sorting/organizing/naming by date-modified, need to do it all by filename. 
+25. ~~Anything after March 15: instead of sorting/organizing/naming by date-modified, need to do it all by filename.~~ 
+26. Post-March 15: concatting.
 
 
 ### Resources
