@@ -5,6 +5,7 @@ import time
 import datetime
 import shutil
 import moviepy.editor as mpy
+import re
 
 
 ## Directories
@@ -30,7 +31,7 @@ for item in os.listdir(raw_files_jf):
 		else:
 			modified = "2015 " + modified[4:-14]
 		modified = datetime.datetime.strptime(modified, "%Y %b %d")
-		shutil.copy2(raw_files_jf + item, day_files + "DAY_" + datetime.datetime.strftime(modified, "%B%d") + ".mp4")
+		#shutil.copy2(raw_files_jf + item, day_files + "DAY_" + datetime.datetime.strftime(modified, "%B%d") + ".mp4")
 		file_array.append(modified)
 
 for item in os.listdir(raw_files):
@@ -39,7 +40,7 @@ for item in os.listdir(raw_files):
 	else:
 		modified = "2015 " + item[8:10] + " " + item[10:12]
 		modified = datetime.datetime.strptime(modified, "%Y %m %d")
-		shutil.copy2(raw_files + item, day_files + "DAY_" + datetime.datetime.strftime(modified, "%B%d") + ".mp4")
+		#shutil.copy2(raw_files + item, day_files + "DAY_" + datetime.datetime.strftime(modified, "%B%d") + ".mp4")
 		file_array.append(modified)
 
 file_array.append(datetime.datetime.now())
@@ -67,14 +68,27 @@ for item in missing:
 
 ## Looping concatenation
 
-base_clip = mpy.VideoFileClip(day_files + "DAY_December31.mp4").set_duration(1)
-clip_array = [base_clip]
+#First, sorting the files...
+regex = re.compile("^DAY_(\d*_\d*)")
 
-sorted_files = os.listdir(day_files)
+def gettimestamp(thestring):
+    m = regex.search(thestring)
+    return datetime.datetime.strptime(m.groups()[0], "%B%d")
 
-# need to change this - can i ADD a date-modified attribute to the files? 
-sorted_files.sort(key=lambda x: os.stat(os.path.join(day_files, x)).st_mtime)
+for fn in sorted(os.listdir(day_files), key=gettimestamp):
+    print fn
 
+# sorted_files = os.listdir(day_files)
+
+# sorted_files.sort(key=lambda x: os.stat(os.path.join(day_files, x)).st_mtime)
+
+
+#Second, preparing the base clip and clip array.
+# base_clip = mpy.VideoFileClip(day_files + "DAY_December31.mp4").set_duration(1)
+# clip_array = [base_clip]
+
+
+#Third, looping through the sorted files, appending to the array, concatenating.
 # for item in sorted_files:
 # 	if item==".DS_Store" or item=="DAY_Dec31.mp4":
 # 		pass	
