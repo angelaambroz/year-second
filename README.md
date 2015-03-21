@@ -36,6 +36,11 @@ year-second
 24. Add a countdown: how many days left to make videos?
 25. ~~Anything after March 15: instead of sorting/organizing/naming by date-modified, need to do it all by filename.~~ 
 26. Post-March 15: concatting.
+27. ~~Sorting the filenames, using the new filename convention.~~
+28. How to deal with December 31, 2014?
+29. Figure out how to skip over copying files (`shutil`) that I already put in `edited`. 
+30. Figure out how to use the latest edit as the new base clip.
+31. Fix labels using `%B` instead of `%b`. Argh. 
 
 
 ### Resources

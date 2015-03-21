@@ -43,6 +43,7 @@ for item in os.listdir(raw_files):
 		#shutil.copy2(raw_files + item, day_files + "DAY_" + datetime.datetime.strftime(modified, "%B%d") + ".mp4")
 		file_array.append(modified)
 
+
 file_array.append(datetime.datetime.now())
 
 
@@ -52,8 +53,8 @@ date_set = set(file_array[0]+datetime.timedelta(x) for x in range((file_array[-1
 
 missing = sorted(date_set-set(file_array))
 
-for item in missing:
-	print "Missing: " + item.strftime("%Y %b %d")
+# for item in missing:
+# 	print "Missing: " + item.strftime("%Y %b %d")
 
 
 ## Making the 'FORGOT' clip
@@ -68,37 +69,38 @@ for item in missing:
 
 ## Looping concatenation
 
+
 #First, sorting the files...
-regex = re.compile("^DAY_(\d*_\d*)")
+regex = re.compile("^DAY_(\D*\d+)")
 
 def gettimestamp(thestring):
-    m = regex.search(thestring)
-    return datetime.datetime.strptime(m.groups()[0], "%B%d")
-
-for fn in sorted(os.listdir(day_files), key=gettimestamp):
-    print fn
-
-# sorted_files = os.listdir(day_files)
-
-# sorted_files.sort(key=lambda x: os.stat(os.path.join(day_files, x)).st_mtime)
+	if thestring==".DS_Store":
+		return datetime.datetime.strptime("2014December30", "%Y%B%d")
+	else:
+		m = regex.search(thestring)
+		if m.groups()[0]=="December31":
+			return datetime.datetime.strptime("2014" + m.groups()[0], "%Y%B%d")
+		else:
+			return datetime.datetime.strptime("2015" + m.groups()[0], "%Y%B%d")
 
 
 #Second, preparing the base clip and clip array.
-# base_clip = mpy.VideoFileClip(day_files + "DAY_December31.mp4").set_duration(1)
-# clip_array = [base_clip]
+base_clip = mpy.VideoFileClip(day_files + "DAY_December31.mp4").set_duration(1)
+clip_array = [base_clip]
 
 
 #Third, looping through the sorted files, appending to the array, concatenating.
-# for item in sorted_files:
-# 	if item==".DS_Store" or item=="DAY_Dec31.mp4":
-# 		pass	
-# 	else:
-# 		print "Now doing: " + item
-# 		day_clip = mpy.VideoFileClip(day_files+item).set_duration(1)
-# 		txt_clip = mpy.TextClip(item[4:7] + " " + item[7:9],fontsize=50,color="white")
-# 		txt_clip = txt_clip.set_pos(("center","bottom")).set_duration(1)
-# 		clip_item = mpy.CompositeVideoClip([day_clip, txt_clip])
-# 		clip_array.append(clip_item)
+for item in sorted(os.listdir(day_files), key=gettimestamp):
+	if item==".DS_Store" or item=="DAY_December31.mp4":
+		pass	
+	else:
+		print "Now doing: " + item
+		# day_clip = mpy.VideoFileClip(day_files+item).set_duration(1)
+		print item[4:-4]
+		# txt_clip = mpy.TextClip(item[4:7] + " " + item[7:9],fontsize=50,color="white")
+		# txt_clip = txt_clip.set_pos(("center","bottom")).set_duration(1)
+		# clip_item = mpy.CompositeVideoClip([day_clip, txt_clip])
+		# clip_array.append(clip_item)
 
 # year_video = mpy.concatenate_videoclips(clip_array, method='compose')
 # year_video.write_videofile(day_files + "../2015edited/2015 in review.mp4",fps=24)
