@@ -53,8 +53,8 @@ date_set = set(file_array[0]+datetime.timedelta(x) for x in range((file_array[-1
 
 missing = sorted(date_set-set(file_array))
 
-# for item in missing:
-# 	print "Missing: " + item.strftime("%Y %b %d")
+for item in missing:
+	print "Missing: " + item.strftime("%Y %b %d")
 
 
 ## Making the 'FORGOT' clip
@@ -84,27 +84,48 @@ def gettimestamp(thestring):
 			return datetime.datetime.strptime("2015" + m.groups()[0], "%Y%B%d")
 
 
-#Second, preparing the base clip and clip array.
+#Second, preparing the base clip and clip arrays.
 base_clip = mpy.VideoFileClip(day_files + "DAY_December31.mp4").set_duration(1)
-clip_array = [base_clip]
+master_array = []
 
 
 #Third, looping through the sorted files, appending to the array, concatenating.
-for item in sorted(os.listdir(day_files), key=gettimestamp):
-	if item==".DS_Store" or item=="DAY_December31.mp4":
-		pass	
-	else:
-		print "Now doing: " + item
-		# day_clip = mpy.VideoFileClip(day_files+item).set_duration(1)
-		print item[4:-4]
-		# txt_clip = mpy.TextClip(item[4:7] + " " + item[7:9],fontsize=50,color="white")
-		# txt_clip = txt_clip.set_pos(("center","bottom")).set_duration(1)
-		# clip_item = mpy.CompositeVideoClip([day_clip, txt_clip])
-		# clip_array.append(clip_item)
+all_days = len(file_array)
 
-# year_video = mpy.concatenate_videoclips(clip_array, method='compose')
-# year_video.write_videofile(day_files + "../2015edited/2015 in review.mp4",fps=24)
+for i in range(1,10):
+	if all_days % i == 0:
+		step = i
 
+print "Number of files: ", all_days
+print "Chunk size: ", step
+
+step = 11
+all_days = 88
+
+for i in range(2+step,all_days,step):
+	clip_array = []
+	for item in sorted(os.listdir(day_files), key=gettimestamp)[i-step:i]:
+		if item==".DS_Store" or item=="DAY_December31.mp4":
+			pass	
+		else:
+			print "Now doing: " + item
+			day_clip = mpy.VideoFileClip(day_files+item).set_duration(1)
+			caption = datetime.datetime.strptime(item[4:-4], "%B%d")
+			caption = datetime.datetime.strftime(caption, "%B %d")
+			txt_clip = mpy.TextClip(caption,fontsize=50,color="white")
+			txt_clip = txt_clip.set_pos(("center","bottom")).set_duration(1)
+			clip_item = mpy.CompositeVideoClip([day_clip, txt_clip])
+			clip_array.append(clip_item)
+	chunk_video = mpy.concatenate_videoclips(clip_array, method='compose')
+	print "Iteration: ", i
+	chunk_video.write_videofile(day_files + "../2015edited/clip" + `i` + ".mp4",fps=24)
+	chunk_clip = mpy.VideoFileClip(day_files + "../2015edited/clip" + `i` + ".mp4")
+	master_array.append(chunk_clip)
+
+master_array[0] = base_clip
+
+year_video = mpy.concatenate_videoclips(master_array, method='compose')
+year_video.write_videofile(day_files + "../2015edited/2015 in review.mp4",fps=24)
 
 
 

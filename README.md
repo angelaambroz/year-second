@@ -40,7 +40,8 @@ year-second
 28. How to deal with December 31, 2014?
 29. Figure out how to skip over copying files (`shutil`) that I already put in `edited`. 
 30. Figure out how to use the latest edit as the new base clip.
-31. Fix labels using `%B` instead of `%b`. Argh. 
+31. ~~Fix labels using `%B` instead of `%b`. Argh.~~
+32. Make caption prettier/easier to see.
 
 
 ### Resources
