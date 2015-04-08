@@ -86,24 +86,29 @@ def gettimestamp(thestring):
 
 #Second, preparing the base clip and clip arrays.
 base_clip = mpy.VideoFileClip(day_files + "DAY_December31.mp4").set_duration(1)
-master_array = []
+master_array = [base_clip]
+clip_array = []
 
 
-#Third, looping through the sorted files, appending to the array, concatenating.
-all_days = len(file_array)
+# Third, looping through the sorted files, appending to the array, concatenating.
+# all_days = len(file_array)
 
-for i in range(1,10):
-	if all_days % i == 0:
-		step = i
+# #This becomes a problem when all_days is a prime. :/ 
+# for i in range(1,10):
+# 	if all_days % i == 0:
+# 		step = i
 
-print "Number of files: ", all_days
-print "Chunk size: ", step
+# print "Number of files: ", all_days
+# print "Chunk size: ", step
 
-step = 11
+#Test chase
+step = 44
 all_days = 88
 
+
 for i in range(2+step,all_days,step):
-	clip_array = []
+	print "Iteration: ", i
+	print clip_array
 	for item in sorted(os.listdir(day_files), key=gettimestamp)[i-step:i]:
 		if item==".DS_Store" or item=="DAY_December31.mp4":
 			pass	
@@ -116,18 +121,18 @@ for i in range(2+step,all_days,step):
 			txt_clip = txt_clip.set_pos(("center","bottom")).set_duration(1)
 			clip_item = mpy.CompositeVideoClip([day_clip, txt_clip])
 			clip_array.append(clip_item)
+			# del day_clip
+			# del clip_item
 	chunk_video = mpy.concatenate_videoclips(clip_array, method='compose')
-	print "Iteration: ", i
 	chunk_video.write_videofile(day_files + "../2015edited/clip" + `i` + ".mp4",fps=24)
 	chunk_clip = mpy.VideoFileClip(day_files + "../2015edited/clip" + `i` + ".mp4")
 	master_array.append(chunk_clip)
-
-master_array[0] = base_clip
+	# and then close all the chunk_array clips? how?
+	print clip_array
+	del clip_array[:]
 
 year_video = mpy.concatenate_videoclips(master_array, method='compose')
 year_video.write_videofile(day_files + "../2015edited/2015 in review.mp4",fps=24)
-
-
 
 
 
