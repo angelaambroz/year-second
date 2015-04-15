@@ -13,7 +13,7 @@ year-second
 3. ~~Check if any day is missing (`os` file meta-data?).~~
 4. ~~Loop through, check that every day has a video.~~
     * **Idea 1**: ~~Loop through files, pull their date modified. Create array. Check array against full array of days since Jan 1?~~
-    * **Idea 2**: Pipe date-modified data out to a text or .csv file, merge, compare?
+    * **Idea 2**: ~~Pipe date-modified data out to a text or .csv file, merge, compare?~~
 5. ~~If day is missing, write `error` message to file _and_ use stand-in black box with "forgotten." text.~~
 6. ~~If day is present, take 1-second random snip (use video meta-data to make it a `def` (function) of the video time-length).~~
 7. ~~Add text for each day: JANUARY 1.~~ 
@@ -32,14 +32,14 @@ year-second
 20. ~~Sort the files so they run in chrono order.~~
 21. ~~Problem: it is EXTREMELY SLOW. What can I do?~~ Instead of writing a video file iteratively, put everything in an array and concat. Also, [0,-1] was super slow.
 22. ~~How to deal with `fps` issue in both phone videos and webcam videos?~~ Wasn't fps, but size of the clip!
-23. Slot in the 'forgot.' video into final year video. 
+23. ~~Slot in the 'forgot.' video into final year video.~~ 
 24. Add a countdown: how many days left to make videos?
 25. ~~Anything after March 15: instead of sorting/organizing/naming by date-modified, need to do it all by filename.~~ 
-26. Post-March 15: concatting.
+26. ~~Post-March 15: concatting.~~
 27. ~~Sorting the filenames, using the new filename convention.~~
-28. How to deal with December 31, 2014?
-29. Figure out how to skip over copying files (`shutil`) that I already put in `edited`. 
-30. Figure out how to use the latest edit as the new base clip.
+28. ~~How to deal with December 31, 2014?~~
+29. ~~Figure out how to skip over copying files (`shutil`) that I already put in `edited`.~~ 
+30. ~~Figure out how to use the latest edit as the new base clip.~~
 31. ~~Fix labels using `%B` instead of `%b`. Argh.~~
 32. Make caption prettier/easier to see.
 
