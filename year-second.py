@@ -15,6 +15,7 @@ raw_files = "/Users/angelaambroz/Documents/Personal/Projects/2015raw/"
 day_files = "/Users/angelaambroz/Documents/Personal/Projects/2015new/"
 
 
+
 ## Preparing the raw day video files
 
 file_array = []
@@ -59,12 +60,14 @@ for item in missing:
 	print "Missing: " + item.strftime("%Y %b %d")
 
 
-## Making the 'FORGOT' clip
+# Making the 'FORGOT' clip
 
 for item in missing:
 	caption = datetime.datetime.strftime(item, "%B %d")
 	filename = datetime.datetime.strftime(item, "%B%d")
-	if ("DAY_" + filename + "_m.mp4") not in os.listdir(day_files):
+	if ("DAY_" + filename + ".mp4") in os.listdir(day_files):
+		pass
+	elif ("DAY_" + filename + "_m.mp4") not in os.listdir(day_files):
 		txt_clip = mpy.TextClip(caption,fontsize=50,color="white")
 		txt_clip = txt_clip.set_pos(("center","bottom")).set_duration(1)
 		forgot_label = mpy.TextClip("forgot. :(", fontsize=70, color="white")
@@ -77,7 +80,7 @@ for item in missing:
 ## Looping concatenation
 
 
-#First, sorting the files...
+# First, sorting the files...
 regex = re.compile("^DAY_(\D*\d+)")
 
 def gettimestamp(thestring):
@@ -91,15 +94,17 @@ def gettimestamp(thestring):
 			return datetime.datetime.strptime("2015" + m.groups()[0], "%Y%B%d")
 
 
-#Second, preparing the base clip and clip arrays.
+# Second, preparing the base clip and clip arrays.
 base_clip = mpy.VideoFileClip(day_files + "DAY_December31.mp4").set_duration(1)
 master_array = [base_clip]
 clip_array = []
 
 
-Third, looping through the sorted files, appending to the array, concatenating.
+# Third, looping through the sorted files, appending to the array, concatenating.
+#NB: Right now, MoviePy throws an IO error about 'too many open files' if n>66. 
+#So I'm manually changing  the first loop's, and going through in 60-clip chunks.
 
-for item in sorted(os.listdir(day_files), key=gettimestamp)[0:20]:
+for item in sorted(os.listdir(day_files), key=gettimestamp)[60:121]: #[CHUNK SIZE]
 	if item==".DS_Store" or item=="DAY_December31.mp4":
 		pass	
 	else:
@@ -116,17 +121,21 @@ for item in sorted(os.listdir(day_files), key=gettimestamp)[0:20]:
 			clip_array.append(clip_item)
 
 chunk_video = mpy.concatenate_videoclips(clip_array, method='compose')
-chunk_video.write_videofile(day_files + "../2015edited/clip" + `1` + ".mp4",fps=24)
-chunk_clip = mpy.VideoFileClip(day_files + "../2015edited/clip" + 1 + ".mp4")
+chunk_video.write_videofile(day_files + "../2015edited/clip" + `3` + ".mp4",fps=24)
+chunk_clip = mpy.VideoFileClip(day_files + "../2015edited/clip" + `3` + ".mp4")
 
-dirty_hack = range(1,6)
+
+# Looping over the master array, concatting the year video itself. 
+
+dirty_hack = range(1,3)
 
 for i in dirty_hack:
-	chunk_video = mpy.VideoFileClip(day_files + "../2015edited/clip" + `i` + ".mp4")
-	master_array.append(chunk_video)
+	print i
+	# chunk_video = mpy.VideoFileClip(day_files + "../2015edited/clip" + `i` + ".mp4")
+	# master_array.append(chunk_video)
 
-year_video = mpy.concatenate_videoclips(master_array, method='compose')
-year_video.write_videofile(day_files + "../2015edited/2015 in review.mp4",fps=24)
+# year_video = mpy.concatenate_videoclips(master_array, method='compose')
+# year_video.write_videofile(day_files + "../2015edited/2015 in review.mp4",fps=24)
 
 
 
