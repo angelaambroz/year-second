@@ -1,9 +1,5 @@
 #!/usr/bin/env python 
 
-import os
-import time
-import datetime
-import shutil
 import moviepy.editor as mpy
 
 # Refs

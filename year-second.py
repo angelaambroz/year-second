@@ -10,9 +10,9 @@ import re
 
 ## Directories
 
-raw_files_jf = "/Users/angelaambroz/Documents/Personal/Projects/2015raw_janfeb/"
-raw_files = "/Users/angelaambroz/Documents/Personal/Projects/2015raw/"
-day_files = "/Users/angelaambroz/Documents/Personal/Projects/2015new/"
+raw_files_jf = "/Users/angelaambroz/Documents/Personal/Projects/2015raw_janfeb/"	#jan/feb
+raw_files = "/Users/angelaambroz/Documents/Personal/Projects/2015raw/"				#everything else
+day_files = "/Users/angelaambroz/Documents/Personal/Projects/2015new/"				#ready to concat
 
 
 
@@ -38,15 +38,27 @@ for item in os.listdir(raw_files_jf):
 
 
 for item in os.listdir(raw_files):
+	
 	if item==".DS_Store":
 		pass
+
 	else:
+		endie = item[-6:-4]
 		modified = "2015 " + item[8:10] + " " + item[10:12]
 		modified = datetime.datetime.strptime(modified, "%Y %m %d")
-		file_array.append(modified)
+
+		if modified in file_array:
+			print "Multiple files for this day: " + modified.strftime("%Y %b %d")
+			mpy.VideoFileClip(raw_files + item).save_frame(day_files + "../2015edited/multiples/still_" + modified.strftime("%b%d") + "_" + endie + ".jpeg")
+			mpy.VideoFileClip(day_files + "DAY_" + datetime.datetime.strftime(modified, "%B%d") + ".mp4").save_frame(day_files + "../2015edited/multiples/still_" + modified.strftime("%b%d") + "_00.jpeg")
+
+		else: 
+			file_array.append(modified)
+		
 		if ("DAY_" + datetime.datetime.strftime(modified, "%B%d") + ".mp4") not in os.listdir(day_files):
 			shutil.copy2(raw_files + item, day_files + "DAY_" + datetime.datetime.strftime(modified, "%B%d") + ".mp4")
-
+		
+			
 file_array.append(datetime.datetime.now())
 
 
@@ -77,7 +89,7 @@ for item in missing:
 		forgot_clip.write_videofile(day_files + "DAY_" + filename + "_m.mp4",fps=24)
 
 
-## Looping concatenation
+# Looping concatenation
 
 
 # First, sorting the files...
@@ -104,7 +116,7 @@ clip_array = []
 #NB: Right now, MoviePy throws an IO error about 'too many open files' if n>66. 
 #So I'm manually changing  the first loop's, and going through in 60-clip chunks.
 
-for item in sorted(os.listdir(day_files), key=gettimestamp)[60:121]: #[CHUNK SIZE]
+for item in sorted(os.listdir(day_files), key=gettimestamp)[121:]: #[DON'T RE-DO PARTS 1-3]
 	if item==".DS_Store" or item=="DAY_December31.mp4":
 		pass	
 	else:
@@ -127,15 +139,19 @@ chunk_clip = mpy.VideoFileClip(day_files + "../2015edited/clip" + `3` + ".mp4")
 
 # Looping over the master array, concatting the year video itself. 
 
-dirty_hack = range(1,3)
+dirty_hack = range(1,6)
 
-for i in dirty_hack:
-	print i
+# for i in dirty_hack:
+# 	print i
 	# chunk_video = mpy.VideoFileClip(day_files + "../2015edited/clip" + `i` + ".mp4")
 	# master_array.append(chunk_video)
 
 # year_video = mpy.concatenate_videoclips(master_array, method='compose')
 # year_video.write_videofile(day_files + "../2015edited/2015 in review.mp4",fps=24)
 
+
+# Some thoughts on the music:
+# - Terry Riley's In C, by Africa Express
+# - Six Pianos, by Steve Reich
 
 
