@@ -1,4 +1,3 @@
-#!/usr/bin/env python 
 
 import re
 import os
@@ -14,32 +13,32 @@ raw_files = "/Users/angelaambroz/Documents/Personal/Projects/2015raw/"				#every
 raw_files_last = "/Users/angelaambroz/Documents/Personal/Projects/2015raw_last/"	#nov/dec
 DAY_FILES = "/Users/angelaambroz/Documents/Personal/Projects/2015new/"			#ready to concat
 
-def convert_filename(filepath, modified_time=False):
+def convert_filename(filepath: str, modified_time: bool = False):
 	file_array = []
 
 	for item in os.listdir(filepath):
-		if item==".DS_Store" or item=="test.mp4":
+		if item in (".DS_Store", "test.mp4"):
 			pass
 		else:
 			if modified_time:
 				modified = time.ctime(os.path.getmtime(filepath + item))
 				if modified[4:7]=="Dec":
-					modified = "2014 " + modified[4:-14]
+                                    modified = f"2014 {modified[4:-14]}"
 				elif modified[8:9]==" ":
-					modified = "2015 " + modified[4:7] + " " + modified[9:10]	
+                                    modified = f"2015 {modified[4:7]} {modified[9:10]}"
 				else:
-					modified = "2015 " + modified[4:-14]
+                                    modified = f"2015 {modified[4:-14}"
 				modified = datetime.strptime(modified, "%Y %b %d")
 
 			else: 
 				endie = item[-6:-4]
-				modified = "2015 " + item[8:10] + " " + item[10:12]
+                                modified = f"2015 {item[8:10]} {item[10:12]}"
 				modified = datetime.strptime(modified, "%Y %m %d")
 
 			if modified in file_array:
-				print("Multiple files for this day: " + modified.strftime("%Y %b %d"))
+				print(f"Multiple files for this day: {modified.strftime('%Y %b %d')}")
 				#mpy.VideoFileClip(filepath + item).save_frame(DAY_FILES + "../2015edited/multiples/still_" + modified.strftime("%b%d") + "_" + endie + ".jpeg")
-				mpy.VideoFileClip(DAY_FILES + "DAY_" + datetime.strftime(modified, "%B%d") + ".mp4").save_frame(DAY_FILES + "../2015edited/multiples/still_" + modified.strftime("%b%d") + "_00.jpeg")
+				mpy.VideoFileClip(f"{DAY_FILES}DAY_{datetime.stftime(modified, '%B%d')}.mp4").save_frame(f"{DAY_FILES}../2015edited/multiples/still_{modified.strftime('%b%d')}_00.jpeg")
 
 			else: 
 				file_array.append(modified)
